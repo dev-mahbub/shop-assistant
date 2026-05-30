@@ -1,0 +1,29 @@
+import { Pool } from "pg";
+import { config } from "../config";
+
+export const pool = new Pool({
+  connectionString: config.connecting_string,
+});
+
+const initDB = async () => {
+  try {
+    await pool.query(`
+        CREATE TABLE IF NOT EXISTS users(
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(20) NOT NULL,
+        email VARCHAR(30) UNIQUE NOT NULL,
+        password TEXT NOT NULL,
+        roll VARCHAR(20) DEFAULT 'shop owener',
+        is_active BOOLEAN DEFAULT FALSE,
+
+        created_at TIMESTAMP DEFAULT NOW(),
+        updated_at TIMESTAMP DEFAULT NOW()
+        )
+        `);
+    console.log("Database connected successfully");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export default initDB;
