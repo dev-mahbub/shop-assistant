@@ -3,6 +3,6 @@ export interface IUsers {
   name: string;
   email: string;
   password: string;
-  roll: string;
+  roll: "admin" | "shopowner";
   is_active: boolean;
 }
