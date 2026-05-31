@@ -31,6 +31,7 @@ const signUpUserService = async (payload: IUsers) => {
     `,
     [name, email, hashPassword, roll, is_active],
   );
+  delete result.rows[0].password;
   return result;
 };
 
