@@ -1,18 +1,21 @@
 import type { Request, Response } from "express";
 import { authService } from "./auth.service";
-import { pool } from "../../db";
+import sendResponse from "../../utils/sendResponse";
+import { StatusCodes } from "http-status-codes";
 
 const signUpUser = async (req: Request, res: Response) => {
   try {
     const result = await authService.signUpUserService(req.body);
 
-    res.status(201).json({
+    sendResponse(res, {
+      statusCode: StatusCodes.CREATED,
       success: true,
       message: "User registerd successfully",
       data: result.rows[0],
     });
   } catch (error: any) {
-    res.status(500).json({
+    sendResponse(res, {
+      statusCode: StatusCodes.INTERNAL_SERVER_ERROR,
       success: false,
       message: error.message,
     });
