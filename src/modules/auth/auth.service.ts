@@ -1,6 +1,9 @@
 import { pool } from "../../db";
 import bcrypt from "bcrypt";
 import type { IUsers } from "./auth.interface";
+import jwt from "jsonwebtoken";
+import { config } from "../../config";
+import type { StringValue } from "ms";
 
 //user register
 const signUpUserService = async (payload: IUsers) => {
@@ -32,20 +35,25 @@ const signUpUserService = async (payload: IUsers) => {
 };
 
 //user login
-const loginUserService = async (payload: any) => {
+const loginUserService = async (payload: IUsers) => {
   //find user with email
   //compare password
-  //login user
+  //create json token
   const { email, password } = payload;
 
   //find user
-  const user = await pool.query(
+  const userData = await pool.query(
     `
     SELECT * FROM users WHERE email=$1
     `,
     [email],
   );
-  const hashPassword = user.rows[0].password;
+
+  if (!userData.rows[0]) {
+    throw new Error("Invalid Credential!");
+  }
+
+  const hashPassword = userData.rows[0].password;
 
   //compare password
   const comparePassword = await bcrypt.compare(password, hashPassword);
@@ -53,6 +61,20 @@ const loginUserService = async (payload: any) => {
   if (!comparePassword) {
     throw new Error("User Does not exists");
   }
+  const user = userData.rows[0];
+
+  //create json token
+  const jsonPaylaod = {
+    name: user.name,
+    email: user.email,
+    roll: user.roll,
+  };
+
+  const token = jwt.sign(jsonPaylaod, config.secrets as string, {
+    expiresIn: config.token_expire as StringValue,
+  });
+  delete user.password;
+  return { token, user };
 };
 
 export const authService = {
