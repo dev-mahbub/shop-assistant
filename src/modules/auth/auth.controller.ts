@@ -22,6 +22,16 @@ const signUpUser = async (req: Request, res: Response) => {
   }
 };
 
+//user login
+const loginUser = async (req: Request, res: Response) => {
+  try {
+    const result = authService.loginUserService(req.body);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const authController = {
   signUpUser,
+  loginUser,
 };
