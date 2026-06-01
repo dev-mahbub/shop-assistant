@@ -47,6 +47,14 @@ const updateUser = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const result = await userService.updateUserService(id as string, req.body);
+
+    if (result.rows.length === 0) {
+      sendResponse(res, {
+        statusCode: StatusCodes.NOT_FOUND,
+        success: false,
+        message: "User not found",
+      });
+    }
     sendResponse(res, {
       statusCode: StatusCodes.OK,
       success: true,
