@@ -1,9 +1,9 @@
 import { pool } from "../../db";
 import bcrypt from "bcrypt";
-import type { IUsers } from "./auth.interface";
 import jwt from "jsonwebtoken";
 import { config } from "../../config";
 import type { StringValue } from "ms";
+import type { IUsers } from "../users/user.interface";
 
 //user register
 const signUpUserService = async (payload: IUsers) => {

@@ -1,5 +1,5 @@
 import { pool } from "../../db";
-import type { IUsers } from "../auth/auth.interface";
+import type { IUsers } from "./user.interface";
 
 //get all users
 const getAllUsersService = async () => {

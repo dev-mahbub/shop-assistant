@@ -3,6 +3,8 @@ export interface IUsers {
   name: string;
   email: string;
   password: string;
-  roll: "admin" | "shopowner";
+  roll: IRolls;
   is_active: boolean;
 }
+
+export type IRolls = "admin" | "shopowener";
