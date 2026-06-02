@@ -30,7 +30,7 @@ const initDB = async () => {
           price DECIMAL(10,2) DEFAULT 15 NOT NULL,
           status VARCHAR(20) DEFAULT 'inactive',
           started_at TIMESTAMP DEFAULT NOW(),
-          expire_at TIMESTAMP,
+          expires_at TIMESTAMP,
           payment_method VARCHAR(20),
 
           created_at TIMESTAMP DEFAULT NOW(),
