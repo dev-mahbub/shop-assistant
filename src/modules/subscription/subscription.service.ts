@@ -1,6 +1,7 @@
 import { pool } from "../../db";
 import type { ISubscription } from "./subscription.interface";
 
+//subscribtion create
 const subscribeService = async (payload: ISubscription) => {
   const { payment_status, plan, price, status, expires_at, payment_method } =
     payload;
