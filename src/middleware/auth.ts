@@ -12,7 +12,7 @@ const checkRole = (roles: IRoles) => {
     //first get token
     //decode token
     //get user from db with decoded email or id
-    //compare roll
+    //compare role
     //send decoded user to request
     const token = req.headers.authorization;
 
@@ -48,7 +48,7 @@ const checkRole = (roles: IRoles) => {
       });
     }
     const user = userData.rows[0];
-    if (roles.length && !roles.includes(user.roll)) {
+    if (roles.length && !roles.includes(user.role)) {
       return sendResponse(res, {
         statusCode: StatusCodes.FORBIDDEN,
         success: false,
