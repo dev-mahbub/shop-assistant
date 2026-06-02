@@ -1,7 +1,8 @@
 import { pool } from "../../db";
-import type { ISubscribe } from "./subscription.interface";
+import type { ISubscription } from "./subscription.interface";
 
-const subscribeService = async (payload: ISubscribe) => {
+const subscribeService = async (payload: ISubscription) => {
+  console.log(payload);
   const result = await pool.query(``);
 };
 

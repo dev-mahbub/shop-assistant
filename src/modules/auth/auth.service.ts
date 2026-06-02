@@ -7,7 +7,7 @@ import type { IUsers } from "../users/user.interface";
 
 //user register
 const signUpUserService = async (payload: IUsers) => {
-  const { name, email, password, roll, is_active } = payload;
+  const { name, email, password, role, is_active } = payload;
 
   //email existance check
   const isUserExists = await pool.query(
@@ -27,9 +27,9 @@ const signUpUserService = async (payload: IUsers) => {
   //create user
   const result = await pool.query(
     `
-    INSERT INTO users( name, email, password, roll, is_active) VALUES($1, $2, $3, COALESCE($4, 'shopowener'), COALESCE($5, false)) RETURNING*
+    INSERT INTO users( name, email, password, role, is_active) VALUES($1, $2, $3, COALESCE($4, 'shopowener'), COALESCE($5, false)) RETURNING*
     `,
-    [name, email, hashPassword, roll, is_active],
+    [name, email, hashPassword, role, is_active],
   );
   delete result.rows[0].password;
   return result;
@@ -68,7 +68,7 @@ const loginUserService = async (payload: IUsers) => {
   const jsonPaylaod = {
     name: user.name,
     email: user.email,
-    roll: user.roll,
+    role: user.role,
   };
 
   const token = jwt.sign(jsonPaylaod, config.secrets as string, {
